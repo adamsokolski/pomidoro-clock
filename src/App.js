@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import bell from "./sounds/bell.mp3";
+import ProgressRing from "./ProgressRing";
 
 export default class App extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class App extends Component {
       isRunning: false,
       intervalId: "",
       label: "Session",
+      progress: 100,
     };
     this.sessionIncrement = this.sessionIncrement.bind(this);
     this.sessionDecrement = this.sessionDecrement.bind(this);
@@ -89,6 +91,7 @@ export default class App extends Component {
       timeLeft: "25:00",
       isRunning: false,
       label: "Session",
+      progress: 0,
     });
     let audio = e.target.nextElementSibling;
     audio.currentTime = 0;
@@ -96,21 +99,31 @@ export default class App extends Component {
   }
 
   counting() {
-    // Todo: check label and if current timer reaches 0 switch to another
-
     if (this.state.label === "Session") {
       this.setState((state) => ({
         sessionTime: state.sessionTime - 1,
         timeLeft: this.secondsToTime(this.state.sessionTime),
         label: "Session",
+        progress: (
+          ((state.sessionTime - 1) / (state.sessionLength * 60)) *
+          100
+        ).toFixed(2),
       }));
     } else if (this.state.label === "Break") {
       this.setState((state) => ({
         breakTime: state.breakTime - 1,
         timeLeft: this.secondsToTime(this.state.breakTime),
         label: "Break",
+        progress: (
+          ((state.breakTime - 1) / (state.breakLength * 60)) *
+          100
+        ).toFixed(2),
       }));
     }
+
+    console.log(this.state.progress);
+
+    // End of session or break
     if (this.state.sessionTime === -1) {
       let audio = document.querySelector("#beep");
       audio.play();
@@ -140,13 +153,25 @@ export default class App extends Component {
   }
 
   render() {
-    const { sessionLength, breakLength, timeLeft, label } = this.state;
+    const {
+      sessionLength,
+      breakLength,
+      timeLeft,
+      label,
+      progress,
+    } = this.state;
     return (
       <div className="App">
-        <div id="timer-label">{label}</div>
-
-        <div id="time-left">{timeLeft}</div>
-
+        <header>
+          <h2>
+            🍅⏰ <br /> Pomidoro Clock
+          </h2>
+        </header>
+        <div className="timer">
+          <ProgressRing radius={120} stroke={5} progress={progress} />
+          <div id="timer-label">{label}</div>
+          <div id="time-left">{timeLeft}</div>
+        </div>
         <div>
           <button id="start_stop" onClick={this.handleStart}>
             Start

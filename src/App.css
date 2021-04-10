@@ -1,14 +1,35 @@
 .App {
-  background-color: #282c34;
+  background-color: #ff6347;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 35px;
   color: white;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.timer #timer-label {
+  position: relative;
+  top: -170px;
+}
+
+.timer #time-left {
+  position: relative;
+  top: -165px;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
 }
