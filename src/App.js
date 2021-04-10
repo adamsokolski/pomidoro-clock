@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./App.scss";
 import bell from "./sounds/bell.mp3";
 import ProgressRing from "./ProgressRing";
 
@@ -25,6 +25,10 @@ export default class App extends Component {
     this.handleReset = this.handleReset.bind(this);
     this.secondsToTime = this.secondsToTime.bind(this);
     this.counting = this.counting.bind(this);
+  }
+
+  componentDidUpdate() {
+    document.title = `${this.state.timeLeft} - ${this.state.label}`;
   }
 
   sessionIncrement() {
@@ -91,7 +95,7 @@ export default class App extends Component {
       timeLeft: "25:00",
       isRunning: false,
       label: "Session",
-      progress: 0,
+      progress: 100,
     });
     let audio = e.target.nextElementSibling;
     audio.currentTime = 0;
@@ -120,8 +124,6 @@ export default class App extends Component {
         ).toFixed(2),
       }));
     }
-
-    console.log(this.state.progress);
 
     // End of session or break
     if (this.state.sessionTime === -1) {
@@ -159,6 +161,7 @@ export default class App extends Component {
       timeLeft,
       label,
       progress,
+      isRunning,
     } = this.state;
     return (
       <div className="App">
@@ -172,38 +175,69 @@ export default class App extends Component {
           <div id="timer-label">{label}</div>
           <div id="time-left">{timeLeft}</div>
         </div>
-        <div>
-          <button id="start_stop" onClick={this.handleStart}>
-            Start
+
+        <div class="controls-box">
+          <div>
+            <button id="start_stop" onClick={this.handleStart}>
+              {isRunning ? "Stop" : "Start"}
+            </button>
+            <button id="reset" onClick={this.handleReset}>
+              Reset
+            </button>
+            <audio src={bell} id="beep">
+              Your browser does not support the
+              <code>audio</code> element.
+            </audio>
+          </div>
+
+          <div id="session-label">Session Length</div>
+          <button
+            disabled={isRunning}
+            id="session-increment"
+            className="circleButton"
+            onClick={this.sessionIncrement}
+          >
+            +
           </button>
-          <button id="reset" onClick={this.handleReset}>
-            Reset
+          <div id="session-length">{sessionLength}</div>
+
+          <button
+            disabled={isRunning}
+            id="session-decrement"
+            className="circleButton"
+            onClick={this.sessionDecrement}
+          >
+            -
           </button>
-          <audio src={bell} id="beep">
-            Your browser does not support the
-            <code>audio</code> element.
-          </audio>
+
+          <div id="break-label">Break Length</div>
+          <button
+            disabled={isRunning}
+            id="break-increment"
+            className="circleButton"
+            onClick={this.breakIncrement}
+          >
+            +
+          </button>
+          <div id="break-length">{breakLength}</div>
+
+          <button
+            disabled={isRunning}
+            id="break-decrement"
+            className="circleButton"
+            onClick={this.breakDecrement}
+          >
+            -
+          </button>
         </div>
-
-        <div id="session-label">Session Length</div>
-        <button id="session-increment" onClick={this.sessionIncrement}>
-          +
-        </button>
-        <div id="session-length">{sessionLength}</div>
-
-        <button id="session-decrement" onClick={this.sessionDecrement}>
-          -
-        </button>
-
-        <div id="break-label">Break Length</div>
-        <button id="break-increment" onClick={this.breakIncrement}>
-          +
-        </button>
-        <div id="break-length">{breakLength}</div>
-
-        <button id="break-decrement" onClick={this.breakDecrement}>
-          -
-        </button>
+        <a
+          className="App-link"
+          href="https://github.com/idKrazu/pomidoro-clock"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
       </div>
     );
   }
