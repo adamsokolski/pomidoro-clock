@@ -1,0 +1,96 @@
+.App {
+  background-color: #ff6347;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  color: white;
+}
+
+.App-link {
+  font-size: 24px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: 0.15s;
+  &:hover {
+    color: #abe2f1;
+  }
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  #timer-label {
+    font-weight: 600;
+    position: relative;
+    top: -165px;
+  }
+  #time-left {
+    font-weight: 600;
+    position: relative;
+    top: -170px;
+  }
+}
+
+.controls-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  position: relative;
+  top: -75px;
+
+  #session-label {
+    width: 100%;
+  }
+
+  #break-label {
+    width: 100%;
+  }
+
+  button {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 22px;
+    margin: 10px;
+    border-radius: 15px;
+    transition: 0.15s;
+
+    &:hover {
+      background-color: #fff;
+      color: #ff6347;
+    }
+
+    &:active {
+      background-color: rgb(255, 212, 212);
+      border: 2px solid rgb(255, 212, 212);
+
+      color: #ff6347;
+    }
+  }
+
+  .circleButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 37px;
+    width: 37px;
+  }
+
+  #start_stop,
+  #reset {
+    padding: 5px 15px 5px 15px;
+  }
+}
+
+header {
+  text-align: center;
+}

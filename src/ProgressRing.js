@@ -1,5 +1,5 @@
 import React from "react";
-import "./ProgressRing.css";
+import "./ProgressRing.scss";
 
 export default class ProgressRing extends React.Component {
   constructor(props) {
