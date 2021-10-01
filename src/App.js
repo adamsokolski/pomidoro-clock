@@ -25,6 +25,7 @@ export default class App extends Component {
     this.handleReset = this.handleReset.bind(this);
     this.secondsToTime = this.secondsToTime.bind(this);
     this.counting = this.counting.bind(this);
+    this.preset = this.preset.bind(this);
   }
 
   componentDidUpdate() {
@@ -67,6 +68,24 @@ export default class App extends Component {
         breakTime: state.breakTime - 60,
       }));
     }
+  }
+  preset() {
+    this.setState((state) => ({
+      // sessionLength: 25,
+      // sessionTime: 1500,
+      // breakLength: 5,
+      // breakTime: 300,
+      // timeLeft: "25:00",
+      // isRunning: false,
+      // intervalId: "",
+      // label: "Session",
+      // progress: 100,
+      sessionLength: 60,
+      sessionTime: 3600,
+      timeLeft: `${this.secondsToTime(3600)}`,
+      breakTime: 600,
+      breakLength: 10,
+    }));
   }
 
   handleStart() {
@@ -155,14 +174,8 @@ export default class App extends Component {
   }
 
   render() {
-    const {
-      sessionLength,
-      breakLength,
-      timeLeft,
-      label,
-      progress,
-      isRunning,
-    } = this.state;
+    const { sessionLength, breakLength, timeLeft, label, progress, isRunning } =
+      this.state;
     return (
       <div className="App">
         <header>
@@ -191,6 +204,7 @@ export default class App extends Component {
           </div>
 
           <div id="session-label">Session Length</div>
+
           <button
             disabled={isRunning}
             id="session-increment"
@@ -228,6 +242,10 @@ export default class App extends Component {
             onClick={this.breakDecrement}
           >
             -
+          </button>
+          <div id="preset-label">Preset</div>
+          <button disabled={isRunning} id="preset-60-10" onClick={this.preset}>
+            60-10
           </button>
         </div>
         <a
